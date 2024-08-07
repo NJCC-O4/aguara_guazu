@@ -1,0 +1,142 @@
+<div class="flex h-screen bg-gray-100">
+    <!-- Sidebar -->
+    <div class="fixed top-0 left-0 w-64 bg-gray-800 text-white flex-shrink-0 h-full">
+      <div class="p-4 text-center text-3xl font-bold">Menú</div>
+      <nav class="mt-6">
+        <button
+          (click)="selectTab('overview')"
+          [ngClass]="{'active': currentTab === 'overview'}"
+          class="block px-4 py-2 hover:bg-gray-700 text-lg"
+        >
+          Clientes
+        </button>
+        <button
+          (click)="selectTab('profile')"
+          [ngClass]="{'active': currentTab === 'profile'}"
+          class="block px-4 py-2 hover:bg-gray-700 text-lg"
+        >
+          Cuentas
+        </button>
+        <button
+          (click)="selectTab('settings')"
+          [ngClass]="{'active': currentTab === 'settings'}"
+          class="block px-4 py-2 hover:bg-gray-700 text-lg"
+        >
+          Reportes
+        </button>
+      </nav>
+      <div class="absolute bottom-0 left-0 w-full">
+        <button
+          (click)="logout()"
+          class="block w-full px-4 py-2 mt-6 text-center text-white bg-red-600 hover:bg-red-700"
+        >
+          Cerrar Sesión
+        </button>
+      </div>
+    </div>
+  
+    <!-- Main Content -->
+    <div class="flex-1 ml-64 p-8">
+      <!-- Filter Bar -->
+      <div *ngIf="currentTab === 'overview'" class="bg-white p-4 rounded-lg shadow-md mb-8 flex flex-wrap gap-4 items-center">
+        <div class="flex items-center">
+          <label for="category" class="mr-2 text-gray-700">Category:</label>
+          <select id="category" [(ngModel)]="selectedCategory" class="p-2 border border-gray-300 rounded-md">
+            <option value="">All</option>
+            <option *ngFor="let category of categories" [value]="category">{{ category }}</option>
+          </select>
+        </div>
+        <div class="flex items-center">
+          <label for="search" class="mr-2 text-gray-700">Search:</label>
+          <input type="text" id="search" [(ngModel)]="searchQuery" placeholder="Search..." class="p-2 border border-gray-300 rounded-md">
+        </div>
+        <div class="flex items-center">
+          <label for="dateRangeStart" class="mr-2 text-gray-700">Start Date:</label>
+          <input type="date" id="dateRangeStart" [(ngModel)]="dateRangeStart" class="p-2 border border-gray-300 rounded-md">
+          <label for="dateRangeEnd" class="ml-4 mr-2 text-gray-700">End Date:</label>
+          <input type="date" id="dateRangeEnd" [(ngModel)]="dateRangeEnd" class="p-2 border border-gray-300 rounded-md">
+        </div>
+      </div>
+  
+      <!-- Cards and Dashboard Section -->
+      <div *ngIf="currentTab === 'overview'">
+        <h2 class="text-6xl font-bold mb-8 text-center text-gray-900">Vista General</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mb-8">
+          <mat-card class="bg-white shadow-md rounded-lg">
+            <mat-card-header>
+              <mat-card-title>Card Title 1</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+              <p>This is some content for the first card.</p>
+            </mat-card-content>
+          </mat-card>
+          <mat-card class="bg-white shadow-md rounded-lg">
+            <mat-card-header>
+              <mat-card-title>Card Title 2</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+              <p>This is some content for the second card.</p>
+            </mat-card-content>
+          </mat-card>
+          <mat-card class="bg-white shadow-md rounded-lg">
+            <mat-card-header>
+              <mat-card-title>Card Title 3</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+              <p>This is some content for the third card.</p>
+            </mat-card-content>
+          </mat-card>
+        </div>
+  
+        <!-- Dashboard Section -->
+        <div class="bg-white p-6 rounded-lg shadow-md">
+          <h3 class="text-4xl font-bold mb-4">Dashboard</h3>
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div class="bg-gray-200 p-4 rounded-lg shadow-md">
+              <h4 class="text-2xl font-semibold mb-2">Widget 1</h4>
+              <p>Some content for widget 1.</p>
+            </div>
+            <div class="bg-gray-200 p-4 rounded-lg shadow-md">
+              <h4 class="text-2xl font-semibold mb-2">Widget 2</h4>
+              <p>Some content for widget 2.</p>
+            </div>
+            <div class="bg-gray-200 p-4 rounded-lg shadow-md">
+              <h4 class="text-2xl font-semibold mb-2">Widget 3</h4>
+              <p>Some content for widget 3.</p>
+            </div>
+          </div>
+        </div>
+        <div class="bg-white p-6 rounded-lg shadow-md mt-8 mb-8">
+            <h3 class="text-4xl font-bold mb-4">Data Table</h3>
+            <table mat-table [dataSource]="dataSource" class="min-w-full divide-y divide-gray-200">
+              <ng-container matColumnDef="column1">
+                <th mat-header-cell *matHeaderCellDef> Column 1 </th>
+                <td mat-cell *matCellDef="let element"> {{element.column1}} </td>
+              </ng-container>
+              <!-- Define more columns as needed -->
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+          </div>
+          <footer class="bg-white-800 text-black py-4 mt-auto">
+            <div class="container mx-auto text-center">
+              <p>&copy; 2024 Junior y Gaston. All rights reserved.</p>
+            </div>
+          </footer>
+      </div>
+  
+      <div *ngIf="currentTab === 'profile'">
+        <h2 class="text-3xl font-bold mb-6">Profile</h2>
+        <p class="text-gray-600">This is the Profile content.</p>
+      </div>
+  
+      <div *ngIf="currentTab === 'settings'">
+        <h2 class="text-3xl font-bold mb-6">Settings</h2>
+        <p class="text-gray-600">This is the Settings content.</p>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Footer -->
+
+  
