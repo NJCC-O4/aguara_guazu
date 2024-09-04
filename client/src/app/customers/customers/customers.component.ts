@@ -1,13 +1,15 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
+
+
 @Component({
   selector: 'app-customers',
   templateUrl: './customers.component.html',
   styleUrls: ['./customers.component.scss']
 })
 export class CustomersComponent {
-  currentTab: string = 'overview'; // Pestaña seleccionada por defecto
+  currentTab: string = 'profile'; // Pestaña seleccionada por defecto
   selectedCategory: string = '';
   searchQuery: string = '';
   dateRangeStart: string = '';
@@ -16,12 +18,19 @@ export class CustomersComponent {
   dataSource: any[] = []; // Tu fuente de datos
   displayedColumns: string[] = ['column1'];
 
+
+
+  
+
+
   constructor(private router: Router) {}
 
   selectTab(tab: string) {
     this.currentTab = tab;
   }
 
+
+  
   logout() {
     // Aquí puedes añadir lógica para limpiar la sesión, si es necesario
     // Por ejemplo, eliminar tokens de autenticación

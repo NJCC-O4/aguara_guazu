@@ -122,3 +122,69 @@
   border-radius: 0.25rem;
   font-weight: 700;
 }
+
+
+
+
+/* Centra el título de la tabla */
+h2 {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+/* Aumenta el tamaño de los botones */
+button {
+  font-size: 14px;
+  padding: 8px 16px;
+}
+
+/* Personaliza la apariencia de las filas pagadas */
+tr.table-success {
+  opacity: 0.7;
+  transition: opacity 0.3s ease;
+}
+
+tr.table-success:hover {
+  opacity: 1;
+}
+
+
+.clientes-container {
+  width: 100%;;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  padding: 10px;
+  border: 1px solid #ddd;
+  text-align: left;
+}
+
+// button {
+//   padding: 5px 10px;
+//   background-color: #4CAF50;
+//   color: white;
+//   border: none;
+//   cursor: pointer;
+// }
+
+button[disabled] {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.pagado {
+  opacity: 0.5;
+}
+
+
+.alert {
+  font-size: 16px;
+  margin-bottom: 20px;
+}

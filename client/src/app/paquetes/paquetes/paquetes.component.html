@@ -1,0 +1,41 @@
+<div *ngIf="alertMessage" class="alert" [ngClass]="{
+    'alert-success': alertType === 'success',
+    'alert-danger': alertType === 'error'
+  }">
+    {{ alertMessage }}
+  </div>
+  
+  <!-- Formulario para agregar/actualizar paquetes -->
+  <form (ngSubmit)="editing ? updatePaquete() : addPaquete()">
+    <div class="mb-3">
+      <label for="descripcion" class="form-label">Descripción</label>
+      <input type="text" id="descripcion" style="width: 500px;" class="form-control" [(ngModel)]="paquete.descripcion" name="descripcion" required>
+    </div>
+    <div class="mb-3">
+      <label for="costo" class="form-label">Costo</label>
+      <input type="number" id="costo" style="width: 500px;" class="form-control" [(ngModel)]="paquete.costo" name="costo" required>
+    </div>
+    <button type="submit" class="btn btn-primary">{{ editing ? 'Actualizar' : 'Agregar' }}</button>
+  </form>
+  
+  <!-- Tabla de paquetes -->
+  <table class="table table-striped mt-4">
+    <thead>
+      <tr>
+        <th>Descripción</th>
+        <th>Costo</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let paquete of paquetes">
+        <td>{{ paquete.descripcion }}</td>
+        <td>{{ paquete.monto | number}}</td>
+        <td>
+          <button (click)="editPaquete(paquete)" class="btn btn-warning btn-sm">Editar</button>
+          <button (click)="deletePaquete(paquete._id)" class="btn btn-danger btn-sm">Eliminar</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  

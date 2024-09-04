@@ -10,12 +10,17 @@ import { CustomersComponent } from './customers/customers/customers.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatTableModule } from '@angular/material/table'; // Importa MatTableModule
 import { MatCardModule } from '@angular/material/card';
-
+import { PaquetesComponent } from './paquetes/paquetes/paquetes.component';
+import { CuentasComponent } from './cuentas/cuentas/cuentas.component';
+//import { FuseAlertService, FuseAlertType } from '@fuse/components/alert';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    CustomersComponent // Asegúrate de que LoginComponent esté aquí
+    CustomersComponent,
+    PaquetesComponent,
+    CuentasComponent // Asegúrate de que LoginComponent esté aquí
   ],
   imports: [
     BrowserModule,
@@ -24,7 +29,8 @@ import { MatCardModule } from '@angular/material/card';
     AppRoutingModule,
     BrowserAnimationsModule,
     MatCardModule,
-    MatTableModule
+    MatTableModule,
+    MatSnackBarModule
   ],
   providers: [],
   bootstrap: [AppComponent]

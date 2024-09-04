@@ -1,0 +1,87 @@
+<button class="btn btn-primary mb-3" (click)="openForm()">Agregar Nuevo Cliente</button>
+
+<div *ngIf="mostrarFormulario" class="mt-4">
+    <form (ngSubmit)="saveCliente()">
+      <!-- Fila 1 -->
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          <label for="name" class="form-label">Nombre</label>
+          <input type="text" class="form-control" id="name" [(ngModel)]="clienteSeleccionado.name" name="name" required>
+        </div>
+        <div class="col-md-6 mb-3">
+          <label for="last_name" class="form-label">Apellido</label>
+          <input type="text" class="form-control" id="last_name" [(ngModel)]="clienteSeleccionado.last_name" name="last_name" required>
+        </div>
+      </div>
+      
+      <!-- Fila 2 -->
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          <label for="phone" class="form-label">Teléfono</label>
+          <input type="text" class="form-control" id="phone" [(ngModel)]="clienteSeleccionado.phone" name="phone" required>
+        </div>
+        <div class="col-md-6 mb-3">
+          <label for="fecha_ingreso" class="form-label">Fecha de Ingreso</label>
+          <input type="date" class="form-control" id="fecha_ingreso" [(ngModel)]="clienteSeleccionado.fecha_ingreso" name="fecha_ingreso" required>
+        </div>
+      </div>
+  
+      <!-- Fila 3 -->
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          <label for="fecha_pagado" class="form-label">Fecha de Pagado</label>
+          <input type="date" class="form-control" id="fecha_pagado" [(ngModel)]="clienteSeleccionado.fecha_pagado" name="fecha_pagado">
+        </div>
+        <div class="col-md-6 mb-3">
+          <label for="paquete_id" class="form-label">Paquete</label>
+          <select class="form-select" id="paquete_id" [(ngModel)]="clienteSeleccionado.paquete_id" name="paquete_id" required>
+            <option *ngFor="let paquete of paquetes" [value]="paquete._id">{{ paquete.descripcion }}</option>
+          </select>
+        </div>
+      </div>
+  
+      <!-- Botones -->
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          <button type="submit" class="btn btn-primary w-100">{{ editar ? 'Actualizar' : 'Agregar' }}</button>
+        </div>
+        <div class="col-md-6 mb-3">
+          <button type="button" class="btn btn-secondary w-100" (click)="cancelarEdicion()">Cancelar</button>
+        </div>
+      </div>
+    </form>
+  </div>
+  
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Nombre</th>
+      <th>Apellido</th>
+      <th>Teléfono</th>
+      <th>Fecha Ingreso</th>
+      <th>Fecha Ultimo Pago</th>
+      <th>Proximo Pago</th>
+      <th>Paquete</th>
+      <th>Monto</th>
+      <th>Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let cliente of clientes">
+      <td>{{ cliente.name }}</td>
+      <td>{{ cliente.last_name }}</td>
+      <td>{{ cliente.phone }}</td>
+      <td>{{ cliente.fecha_ingreso |  date:'MMM d, y' }}</td>
+      <td>{{ cliente.fecha_pagado | date:'MMM d, y' }}</td>
+      <td>{{ cliente.fecha_vencimiento| date:'MMM d, y' }}</td>
+      <td>{{ getDescripcionPaquete(cliente.paquete_id) }}</td>
+      <td>{{ cliente.paquete_monto | number }}</td>
+      <td>
+        <button class="btn btn-success mx-2" (click)="openForm(cliente)">Editar</button>
+        <button class="btn btn-danger mx-2" (click)="deleteCliente(cliente)">Eliminar</button>
+        <button type="button" class="btn btn-success mx-2" (click)="markAsPaid(cliente)">Pagado</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
