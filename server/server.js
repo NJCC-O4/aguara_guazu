@@ -1,61 +1,41 @@
+'use strict';
+
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-const app = express();
+const path = require('path');
 const properties = require('./src/config/properties'); 
-const port = 3000;
-
-
-
-
-//RUTAS
-const menuRoute = require('./src/app/menu/menu.routes');
-
-
-// Middleware
-app.use(cors());
-app.use(bodyParser.json());
-
-
-//Rutas
 const router = express.Router();
+const app = express();
+
+// Configuración de middleware
+app.use(bodyParser.json({ limit: '50mb', extended: true }));
+app.use(bodyParser.urlencoded({ extended: true, limit: '50mb' }));
+app.use(cors());
+app.options('*', cors());
+
 // Rutas
-app.get('/', (req, res) => {
-  res.send('Hello from Node.js!');
-});
+const authRoutes = require('./src/app/auth/auth.routes');
+const customerRoutes = require('./src/app/customers/customers.routes')
+const paqueteRoutes =require('./src/app/paquetes/paquetes.routes')
+const cuentasRoutes =require('./src/app/cuentas/cuentas.routes')
 
 
-//PUERTO
+app.use(express.static(path.join(__dirname, 'public')));
 
-const server = app.listen(properties.PORT);
-
-
-
-
-
-app.post('/api/login', (req, res) => {
-  const { username, password } = req.body;
-  // Aquí iría la lógica de autenticación
-  if (username === 'admin' && password === 'password') {
-    res.json({ success: true, token: 'fake-jwt-token' });
-  } else {
-    res.status(401).json({ success: false, message: 'Authentication failed' });
-  }
-});
+// Configuración de rutas
+authRoutes(router);
+customerRoutes(router)
+paqueteRoutes(router)
+cuentasRoutes(router)
 
 
-
-menuRoute(router);
-
-
-
-app.use('/api', router)
-app.use(router)
-
-
-
+app.use('/api', router);
+app.use(router);
 
 // Iniciar el servidor
-app.listen(port, () => {
-  console.log(`Server running at http://localhost:${port}/`);
+const server = app.listen(properties.PORT, () => {
+    console.log(`Servidor corriendo en el puerto ${properties.PORT}`);
 });
+
+module.exports = server;
